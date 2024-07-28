@@ -7,20 +7,29 @@ function Home() {
     const [users, setUsers] = useState([]);
     const {id} = useParams();
 
+ 
+    const loadUser = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080/allUser");
+            setUsers(response.data);
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    };
+
+    const deleteUser = async (id) => {
+        try {
+            await axios.delete(`http://localhost:8080/user/${id}`);
+            await loadUser(); // Reload users after successful deletion
+        } catch (error) {
+            console.error("Error deleting user:", error);
+        }
+    };
+
     useEffect(() => {
         loadUser();
     }, []);
 
-    const loadUser = async () => {
-        const result = await axios.get("http://localhost:8080/allUser");
-        console.log(result.data);
-        setUsers(result.data);
-    };
-
-    const deleteUser = async(id) => {
-        await axios.delete(`http://localhost:8080/user/${id}`)
-        loadUser()
-    }
 
     return (
         <div className="container">

@@ -6,20 +6,27 @@ import Home from "./pages/Home";
 import AddUser from "./users/AddUser";
 import EditUser from "./users/EditUser";
 import ViewUser from "./users/ViewUser";
+import ThemeProvider from "./component/ThemeProvider";
+
 
 function App() {
+
   return (
-    <div className="App">
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/addUser" element={<AddUser/>} />
-          <Route exact path="/editUser/:id" element={<EditUser/>}/>
-          <Route exact path="/viewUser/:id" element={<ViewUser/>}/>
-        </Routes>
-      </Router>
-    </div>
+    <ThemeProvider>
+      {/* <div className={`App ${theme === 'dark' ? 'dark-theme' : ''}`}> */}
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/addUser" element={<AddUser />} />
+            <Route exact path="/editUser/:id" element={<EditUser />} />
+            <Route exact path="/viewUser/:id" element={<ViewUser />} />
+          </Routes>
+        </Router>
+      {/* </div> */}
+    </ThemeProvider>
+
+
   );
 }
 

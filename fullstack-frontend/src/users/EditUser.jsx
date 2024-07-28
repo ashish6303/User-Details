@@ -5,41 +5,15 @@ import axios from 'axios';
 
 function EditUser() {
 
-    // const [name, setName] = useState('');
-    // const [userName, setUserName] = useState('');
-    // const [email, setEmail] = useState('');
-
-    // This is a object
     const [user, setUser] = useState({
         name:"",
         username:"",
         email: ""
     })
 
-
     let navigate = useNavigate();
-// Here we are oing to destruct the object
     const {name, username, email} = user;
-
     const {id} = useParams();
-
-
-    // const handelNameChange = (e) => {
-    //     setName(e.target.value);
-    //     console.log(name);
-
-    // }
-
-    // const handelUserNameChange = (e) => {
-    //     setUserName(e.target.value);
-    // }
-    // console.log(userName)
-
-    // const handelEmailChange = (e) => {
-    //     setEmail(e.target.value);
-    //     console.log(email)
-
-    // }
 
     useEffect(() => {
         loadUser();
@@ -48,8 +22,9 @@ function EditUser() {
     const onInputChange = (e) => {
         setUser({...user, [e.target.name]: e.target.value});
     }
+    
 
-    const onSubmit =async (e) => {
+    const onSubmit = async (e) => {
         console.log(user,"user");
         e.preventDefault();
         await axios.put(`http://localhost:8080/user/${id}`,user);

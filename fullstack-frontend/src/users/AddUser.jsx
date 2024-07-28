@@ -2,51 +2,53 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function AddUser() {
 
-    // const [name, setName] = useState('');
-    // const [userName, setUserName] = useState('');
-    // const [email, setEmail] = useState('');
-
-    // This is a object
     const [user, setUser] = useState({
-        name:"",
-        username:"",
+        name: "",
+        username: "",
         email: ""
     })
 
     let navigate = useNavigate();
-// Here we are oing to destruct the object
-    const {name, username, email} = user;
-
-
-    // const handelNameChange = (e) => {
-    //     setName(e.target.value);
-    //     console.log(name);
-
-    // }
-
-    // const handelUserNameChange = (e) => {
-    //     setUserName(e.target.value);
-    // }
-    // console.log(userName)
-
-    // const handelEmailChange = (e) => {
-    //     setEmail(e.target.value);
-    //     console.log(email)
-
-    // }
+    const { name, username, email } = user;
 
     const onInputChange = (e) => {
-        setUser({...user, [e.target.name]: e.target.value});
+        setUser({ ...user, [e.target.name]: e.target.value });
     }
 
-    const onSubmit =async (e) => {
-        console.log(user,"user");
+    const postData = () => {
+        const payload = {
+            name: user.name,
+            username: user.username,
+            email : user.email
+        }
+        const config = {
+            method : 'post',
+            url: 'http://localhost:8080/createUser',
+            data: payload
+        }
+        axios(config)
+        .then((resp) => {
+            console.log("test", resp)
+            toast("This is a custom toast Notification!", {
+                        position: toast.POSITION.BOTTOM_LEFT,
+            })
+        })
+        .catch((error) => {
+            console.error('Error creating user:', error);
+            toast.error('Failed to create user');
+        })
+
+          navigate('/')
+    }
+
+
+    const onSubmit = async (e) => {
         e.preventDefault();
-        await axios.post("http://localhost:8080/createUser",user);
-        navigate('/');
+        postData();
     }
 
 
